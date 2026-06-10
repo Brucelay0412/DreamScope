@@ -1,0 +1,9 @@
+# Supabase Temp
+supabase/.temp/
+
+# VSCode
+.vscode/
+
+# Environment
+.env
+.env.local

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <title>DreamScope AI 夢想規劃器</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>DreamScope</h1>
+        <p>輸入你的夢想，看看未來還有多遠。</p>
+        <a href="wall.html" class="link-btn">前往夢想牆</a>
+    </header>
+
+    <main>
+        <section class="card">
+            <h2>AI 夢想規劃器</h2>
+
+            <label>夢想名稱</label>
+            <input type="text" id="dreamName" placeholder="例如：買 YZF-R6">
+
+            <label>目前存款</label>
+            <input type="number" id="currentMoney" placeholder="例如：100000">
+
+            <label>每月收入</label>
+            <input type="number" id="income" placeholder="例如：28000">
+
+            <label>每月支出</label>
+            <input type="number" id="expense" placeholder="例如：13000">
+
+            <label>夢想目標金額</label>
+            <input type="number" id="targetMoney" placeholder="例如：450000">
+
+            <button onclick="calculateDream()">開始規劃</button>
+        </section>
+
+        <section class="card result" id="resultBox">
+            <h2>規劃結果</h2>
+            <p id="resultText">請先輸入你的夢想資料。</p>
+
+            <button id="shareBtn" onclick="sharePlanToWall()" style="display:none;">
+                發布到夢想牆
+            </button>
+        </section>
+
+        <section class="card">
+            <h2>關於 DreamScope</h2>
+            <p>
+                DreamScope 是一個 AI 夢想規劃網站，
+                使用者可以輸入夢想、目前存款、收入與支出，
+                系統會自動計算達成時間，並產生階段式執行計畫。
+            </p>
+            <p>
+                本網站結合 JavaScript 前端運算與 Supabase 雲端資料庫，
+                可將 AI 規劃結果與夢想牆資料永久保存。
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 DreamScope AI 夢想規劃器</p>
+        
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

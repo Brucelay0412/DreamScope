@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>DreamScope 夢想宇宙牆</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ 
+  <header>
+    <h1>夢想宇宙牆</h1>
+    <p>把你的夢想摺成便利貼，漂浮在宇宙的某個角落。</p>
+    <a href="index.html" class="link-btn" style="width: auto; padding: 10px 30px;">回到首頁</a>
+  </header>
+ 
+  <main style="grid-template-columns: 1fr; max-width: 1100px;">
+    <section class="card">
+      <h2>發布我的夢想紙條</h2>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+        <div>
+          <label>暱稱</label>
+          <input type="text" id="nickname" placeholder="例如：雷克斯">
+          <label>夢想名稱</label>
+          <input type="text" id="wallDreamName" placeholder="例如：入手 YZF-R6">
+        </div>
+        <div>
+          <label>目標金額</label>
+          <input type="number" id="wallTargetMoney" placeholder="例如：450000">
+          <label>目前存款</label>
+          <input type="number" id="wallCurrentMoney" placeholder="例如：100000">
+        </div>
+      </div>
+      <label>對未來的自己說一句話</label>
+      <input type="text" id="message" placeholder="例如：熱血一次，絕不後悔！">
+      <button onclick="addDreamToWall()">貼上夢想牆</button>
+    </section>
+ 
+    <section class="card" style="background: rgba(255, 255, 255, 0.2);">
+      <h2>正在發光的夢想紙條</h2>
+      <div id="dreamList">
+        </div>
+    </section>
+  </main>
+ 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
+</body>
+</html>

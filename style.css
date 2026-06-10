@@ -1,0 +1,207 @@
+/* 全域夢幻底色 */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+  background: linear-gradient(135deg, #eef2f3 0%, #ffeef8 50%, #e0f2fe 100%);
+  color: #334155;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* 標頭改為未來感微光 */
+header {
+  text-align: center;
+  padding: 50px 20px 20px;
+}
+
+header h1 {
+  font-size: 3rem;
+  background: linear-gradient(45deg, #ec4899, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(236, 72, 153, 0.2));
+  margin-bottom: 8px;
+  animation: float 4s ease-in-out infinite;
+}
+
+header p {
+  color: #64748b;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+/* 網格排版 */
+main {
+  width: 95%;
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  padding-bottom: 60px;
+}
+
+/* 夢幻毛玻璃卡片 */
+.card {
+  background: rgba(255, 255, 255, 0.45);
+  padding: 30px;
+  border-radius: 24px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 20px 50px rgba(148, 163, 184, 0.15);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 30px 60px rgba(236, 72, 153, 0.15);
+}
+
+.card h2 {
+  color: #1e293b;
+  font-size: 1.5rem;
+  margin-top: 0;
+  border-left: 5px solid #ec4899;
+  padding-left: 10px;
+}
+
+/* 輸入框美化 */
+label {
+  display: block;
+  margin-top: 18px;
+  margin-bottom: 6px;
+  color: #475569;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  background: rgba(255, 255, 255, 0.7);
+  font-size: 16px;
+  color: #334155;
+  transition: all 0.3s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #ec4899;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(236, 72, 153, 0.15);
+}
+
+/* 霓虹霓光按鈕 */
+button, .link-btn {
+  width: 100%;
+  margin-top: 24px;
+  padding: 14px;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(90deg, #ff7eb3, #7afcff);
+  background-size: 200% auto;
+  color: #1e293b;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: 0 8px 20px rgba(255, 126, 179, 0.3);
+}
+
+button:hover, .link-btn:hover {
+  background-position: right center;
+  transform: scale(1.02);
+  box-shadow: 0 12px 25px rgba(122, 252, 255, 0.4);
+}
+
+/* 夢想牆專用：3D 便利貼效果 */
+#dreamList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 10px;
+}
+
+.dream-item {
+  background: linear-gradient(145deg, #fffffc, #fff9e6); /* 經典便利貼黃、微調夢幻粉 */
+  padding: 20px;
+  border-radius: 4px; /* 稍微方正像便利貼 */
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.08);
+  position: relative;
+  transition: all 0.3s ease;
+  color: #475569;
+  border-bottom-right-radius: 20px 5px; /* 紙張捲角特效 */
+}
+
+/* 讓便利貼隨機稍微傾斜，更像貼上去的 */
+.dream-item:nth-child(odd) {
+  transform: rotate(-2deg);
+  background: linear-gradient(145deg, #f0fdf4, #dcfce7); /* 粉綠 */
+}
+.dream-item:nth-child(even) {
+  transform: rotate(3deg);
+  background: linear-gradient(145deg, #fdf2f8, #fce7f3); /* 粉紅 */
+}
+.dream-item:nth-child(3n) {
+  transform: rotate(-1.5deg);
+  background: linear-gradient(145deg, #eff6ff, #dbeafe); /* 夢幻藍 */
+}
+
+.dream-item:hover {
+  transform: scale(1.08) rotate(0deg) translateY(-10px);
+  z-index: 10;
+  box-shadow: 10px 15px 25px rgba(0, 0, 0, 0.12);
+}
+
+.dream-item h3 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  color: #0f172a;
+  border-bottom: 1px dashed rgba(0,0,0,0.1);
+  padding-bottom: 5px;
+}
+
+/* 進度條美化 */
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 12px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ec4899, #3b82f6);
+  border-radius: 999px;
+}
+
+/* 浮動動畫 */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
+}
+
+footer {
+  text-align: center;
+  padding: 30px;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  main { grid-template-columns: 1fr; }
+  #dreamList { grid-template-columns: 1fr 1fr; }
+}
