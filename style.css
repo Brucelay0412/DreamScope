@@ -488,3 +488,11 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+
+/* 修正上方導覽按鈕太寬 */
+.nav-actions .link-btn {
+  width: auto;
+  min-width: 180px;
+  max-width: 260px;
+  padding: 13px 32px;
+}

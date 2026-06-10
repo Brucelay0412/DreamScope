@@ -281,6 +281,7 @@ async function loadDreamWall() {
 }
 
 // 5. 更新夢想進度
+// 5. 更新夢想進度
 async function updateDreamProgress(id, targetMoney) {
   const newMoney = prompt("請輸入最新目前存款：");
 
@@ -289,18 +290,26 @@ async function updateDreamProgress(id, targetMoney) {
   const moneyNumber = Number(newMoney);
 
   if (Number.isNaN(moneyNumber) || moneyNumber < 0) {
-    alert("請輸入正確金額。");
+    alert("請輸入正確的金額。");
     return;
   }
 
-  const { error } = await supabaseClient
+  const { data, error } = await supabaseClient
     .from("dream_wall")
-    .update({ current_money: moneyNumber })
-    .eq("id", id);
+    .update({
+      current_money: moneyNumber
+    })
+    .eq("id", id)
+    .select();
 
   if (error) {
-    console.error(error);
-    alert("更新失敗");
+    console.error("更新失敗：", error);
+    alert("更新失敗，請查看 Console 錯誤訊息。");
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    alert("沒有找到這張夢想卡，可能是資料表 id 欄位或 RLS 權限問題。");
     return;
   }
 
