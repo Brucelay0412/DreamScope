@@ -233,53 +233,71 @@ async function loadDreamWall() {
     const dreamList = document.getElementById("dreamList");
     if (!dreamList) return;
 
+    dreamList.innerHTML = "<p>夢想牆載入中...</p>";
+
     const { data, error } = await supabaseClient
         .from("dream_wall")
         .select("*")
         .order("created_at", { ascending: false });
 
     if (error) {
-        console.error(error);
-        dreamList.innerHTML = "<p>夢想牆載入失敗。</p>";
+        console.error("夢想牆載入失敗：", error);
+        dreamList.innerHTML = "<p>夢想牆載入失敗，請查看 Console 錯誤訊息。</p>";
         return;
     }
-
-    dreamList.innerHTML = "";
 
     if (!data || data.length === 0) {
         dreamList.innerHTML = "<p>目前還沒有夢想卡，快來成為第一個吧！</p>";
         return;
     }
 
+    dreamList.innerHTML = "";
+
     data.forEach(dream => {
+        const currentMoney = Number(dream.current_money || 0);
+        const targetMoney = Number(dream.target_money || 1);
+
         const percent = Math.min(
             100,
-            Math.round((dream.current_money / dream.target_money) * 100)
+            Math.round((currentMoney / targetMoney) * 100)
         );
 
-        const safePlan = encodeURIComponent(dream.ai_plan || "");
-        const safeTitle = encodeURIComponent(dream.dream_name || "AI 夢想導航紀錄");
+        const card = document.createElement("div");
+        card.className = "dream-item";
 
-        dreamList.innerHTML += `
-      <div class="dream-item" onclick="openPlanModal(decodeURIComponent('${safeTitle}'), decodeURIComponent('${safePlan}'))">
-        <h3>${dream.nickname}</h3>
-        <p><b>夢想：</b>${dream.dream_name}</p>
-        <p class="dream-msg">${dream.message || "慢慢來，但不要停。"}</p>
-        <p class="dream-money">
-          ${formatMoney(dream.current_money)} / ${formatMoney(dream.target_money)} 元
-        </p>
+        card.innerHTML = `
+            <h3>${escapeHtml(dream.nickname)}</h3>
+            <p><b>夢想：</b>${escapeHtml(dream.dream_name)}</p>
+            <p class="dream-msg">${escapeHtml(dream.message || "慢慢來，但不要停。")}</p>
+            <p class="dream-money">
+                ${formatMoney(currentMoney)} / ${formatMoney(targetMoney)} 元
+            </p>
 
-        <div class="progress-bar">
-          <div class="progress-fill" style="width:${percent}%"></div>
-        </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width:${percent}%"></div>
+            </div>
 
-        <p class="dream-percent">完成度 ${percent}%</p>
+            <p class="dream-percent">完成度 ${percent}%</p>
 
-        <button class="update-btn" onclick="event.stopPropagation(); updateDreamProgress('${dream.id}', ${dream.target_money})">
-          更新進度
-        </button>
-      </div>
-    `;
+            <button class="update-btn">
+                更新進度
+            </button>
+        `;
+
+        card.addEventListener("click", () => {
+            openPlanModal(
+                dream.dream_name || "AI 夢想導航紀錄",
+                dream.ai_plan || ""
+            );
+        });
+
+        const updateBtn = card.querySelector(".update-btn");
+        updateBtn.addEventListener("click", (event) => {
+            event.stopPropagation();
+            updateDreamProgress(dream.id, targetMoney);
+        });
+
+        dreamList.appendChild(card);
     });
 }
 
