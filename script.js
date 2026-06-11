@@ -257,6 +257,9 @@ async function loadDreamWall() {
             Math.round((dream.current_money / dream.target_money) * 100)
         );
 
+        const safePlan = encodeURIComponent(dream.ai_plan || "");
+        const safeTitle = encodeURIComponent(dream.dream_name || "AI 夢想導航紀錄");
+
         dreamList.innerHTML += `
       <div class="dream-item" onclick="openPlanModal(decodeURIComponent('${safeTitle}'), decodeURIComponent('${safePlan}'))">
         <h3>${dream.nickname}</h3>
@@ -277,8 +280,6 @@ async function loadDreamWall() {
         </button>
       </div>
     `;
-        const safePlan = encodeURIComponent(dream.ai_plan || "");
-        const safeTitle = encodeURIComponent(dream.dream_name || "AI 夢想導航紀錄");
     });
 }
 
@@ -398,8 +399,9 @@ async function loadHomeStats() {
     const totalSavedMoneyEl =
         document.getElementById("totalSavedMoney");
 
-    totalSavedMoneyEl.textContent =
-        formatMoney(totalSavedMoney) + " 元";
+    if (totalSavedMoneyEl) {
+        totalSavedMoneyEl.textContent = formatMoney(totalSavedMoney) + " 元";
+    }
 }
 
 function escapeHtml(text) {
