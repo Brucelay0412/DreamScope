@@ -356,6 +356,41 @@ async function sharePlanToWall() {
   window.location.href = "wall.html";
 }
 
+// 7. 載入首頁統計資料
+async function loadHomeStats() {
+  const totalDreamsEl = document.getElementById("totalDreams");
+  const completedDreamsEl = document.getElementById("completedDreams");
+  const totalTargetMoneyEl = document.getElementById("totalTargetMoney");
+
+  if (!totalDreamsEl || !completedDreamsEl || !totalTargetMoneyEl) return;
+
+  const { data, error } = await supabaseClient
+    .from("dream_wall")
+    .select("target_money, current_money");
+
+  if (error) {
+    console.error("首頁統計載入失敗：", error);
+    return;
+  }
+
+  const dreams = data || [];
+
+  const totalDreams = dreams.length;
+
+  const completedDreams = dreams.filter(dream => {
+    return Number(dream.current_money) >= Number(dream.target_money);
+  }).length;
+
+  const totalTargetMoney = dreams.reduce((sum, dream) => {
+    return sum + Number(dream.target_money || 0);
+  }, 0);
+
+  totalDreamsEl.textContent = totalDreams;
+  completedDreamsEl.textContent = completedDreams;
+  totalTargetMoneyEl.textContent = formatMoney(totalTargetMoney) + " 元";
+}
+
 window.onload = () => {
   loadDreamWall();
+  loadHomeStats();
 };
