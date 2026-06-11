@@ -224,7 +224,7 @@ async function addDreamToWall() {
 
     if (error) {
         console.error(error);
-        alert("發布失敗");
+        alert("發布失敗：" + error.message);
         return;
     }
 
@@ -469,8 +469,6 @@ window.addEventListener("click", function (event) {
     }
 });
 
-let currentUser = null;
-
 
 let currentUser = null;
 
@@ -491,8 +489,12 @@ async function checkGoogleUser() {
     if (!loginBtn) return;
 
     if (user) {
-        loginBtn.innerHTML = `👤 ${user.email}`;
-        loginBtn.onclick = null;
+        loginBtn.innerHTML = `
+            <span class="login-email">${user.email}</span>
+            <span class="logout-text">登出</span>
+        `;
+
+        loginBtn.onclick = signOutGoogle;
     } else {
         loginBtn.innerHTML = "使用 Google 登入";
         loginBtn.onclick = signInWithGoogle;
@@ -513,6 +515,21 @@ async function signInWithGoogle() {
         alert("Google 登入失敗");
     }
 }
+
+async function signOutGoogle() {
+    const { error } = await supabaseClient.auth.signOut();
+
+    if (error) {
+        console.error("登出失敗：", error);
+        alert("登出失敗");
+        return;
+    }
+
+    currentUser = null;
+    alert("已登出");
+    location.reload();
+}
+
 
 // 頁面載入時執行
 window.onload = async () => {
