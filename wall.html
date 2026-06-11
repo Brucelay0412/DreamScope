@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -60,6 +61,17 @@
       </p>
 
       <div id="dreamList"></div>
+
+      <div id="planModal" class="plan-modal">
+        <div class="plan-modal-content">
+          <button class="modal-close-btn" onclick="closePlanModal()">✕</button>
+
+          <h2 id="modalTitle">AI 夢想導航紀錄</h2>
+
+          <div id="modalPlanText" class="modal-plan-text">
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 
@@ -70,4 +82,5 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="script.js"></script>
 </body>
+
 </html>

@@ -258,7 +258,7 @@ async function loadDreamWall() {
         );
 
         dreamList.innerHTML += `
-      <div class="dream-item">
+      <div class="dream-item" onclick="openPlanModal(decodeURIComponent('${safeTitle}'), decodeURIComponent('${safePlan}'))">
         <h3>${dream.nickname}</h3>
         <p><b>夢想：</b>${dream.dream_name}</p>
         <p class="dream-msg">${dream.message || "慢慢來，但不要停。"}</p>
@@ -272,15 +272,16 @@ async function loadDreamWall() {
 
         <p class="dream-percent">完成度 ${percent}%</p>
 
-        <button class="update-btn" onclick="updateDreamProgress('${dream.id}', ${dream.target_money})">
+        <button class="update-btn" onclick="event.stopPropagation(); updateDreamProgress('${dream.id}', ${dream.target_money})">
           更新進度
         </button>
       </div>
     `;
+        const safePlan = encodeURIComponent(dream.ai_plan || "");
+        const safeTitle = encodeURIComponent(dream.dream_name || "AI 夢想導航紀錄");
     });
 }
 
-// 5. 更新夢想進度
 // 5. 更新夢想進度
 async function updateDreamProgress(id, targetMoney) {
     const newMoney = prompt("請輸入最新目前存款：");
@@ -342,7 +343,8 @@ async function sharePlanToWall() {
             dream_name: latestDreamData.dreamName,
             target_money: latestDreamData.targetMoney,
             current_money: latestDreamData.currentMoney,
-            message: latestDreamData.message
+            message: latestDreamData.message,
+            ai_plan: latestAiPlanText
         }
     ]);
 
@@ -399,6 +401,46 @@ async function loadHomeStats() {
     totalSavedMoneyEl.textContent =
         formatMoney(totalSavedMoney) + " 元";
 }
+
+function escapeHtml(text) {
+    return String(text || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+function openPlanModal(title, plan) {
+    const modalTitle = document.getElementById("modalTitle");
+    const modalPlanText = document.getElementById("modalPlanText");
+    const planModal = document.getElementById("planModal");
+
+    if (!modalTitle || !modalPlanText || !planModal) return;
+
+    modalTitle.innerText = `🌌 ${title}`;
+
+    modalPlanText.innerHTML = plan
+        ? escapeHtml(plan).replace(/\n/g, "<br>")
+        : "這張夢想卡目前沒有 AI 規劃紀錄。";
+
+    planModal.style.display = "flex";
+}
+
+function closePlanModal() {
+    const planModal = document.getElementById("planModal");
+    if (planModal) {
+        planModal.style.display = "none";
+    }
+}
+
+window.addEventListener("click", function (event) {
+    const planModal = document.getElementById("planModal");
+
+    if (event.target === planModal) {
+        closePlanModal();
+    }
+});
 
 window.onload = () => {
     loadDreamWall();

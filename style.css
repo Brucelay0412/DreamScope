@@ -543,3 +543,68 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+
+/* AI 規劃彈窗 */
+.plan-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  padding: 24px;
+  background: rgba(3, 7, 18, 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  justify-content: center;
+  align-items: center;
+}
+
+.plan-modal-content {
+  width: min(820px, 96%);
+  max-height: 82vh;
+  overflow-y: auto;
+  position: relative;
+  padding: 32px;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at top left, rgba(255, 110, 199, 0.18), transparent 32%),
+    radial-gradient(circle at bottom right, rgba(96, 165, 250, 0.18), transparent 35%),
+    rgba(15, 23, 42, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.65),
+    0 0 45px rgba(168, 85, 247, 0.18);
+}
+
+.plan-modal-content h2 {
+  margin: 0 0 22px;
+  padding-left: 13px;
+  border-left: 5px solid var(--pink);
+  color: #f8fafc;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: auto;
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: none;
+}
+
+.modal-plan-text {
+  line-height: 1.9;
+  color: #e5e7eb;
+  padding: 22px;
+  border-radius: 22px;
+  background: rgba(15, 23, 42, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  white-space: normal;
+}
+
+.dream-item {
+  cursor: pointer;
+}
