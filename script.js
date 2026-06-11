@@ -574,7 +574,60 @@ function updateAuthUI() {
 }
 
 window.onload = async () => {
-    await checkAuthUser();
-    loadDreamWall();
-    loadHomeStats();
+
+  loadDreamWall();
+
+  loadHomeStats();
+
+  await checkGoogleUser();
+
 };
+
+// Google 登入
+
+async function signInWithGoogle() {
+
+  const { error } =
+    await supabaseClient.auth.signInWithOAuth({
+
+      provider: "google",
+
+      options: {
+        redirectTo:
+          "https://brucelay0412.github.io/DreamScope"
+      }
+
+    });
+
+  if (error) {
+    console.error(error);
+    alert("Google 登入失敗");
+  }
+}
+
+async function checkGoogleUser() {
+
+  const { data, error } =
+    await supabaseClient.auth.getSession();
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  const user =
+    data.session?.user;
+
+  if (!user) return;
+
+  const loginBtn =
+    document.getElementById("googleLoginBtn");
+
+  if (loginBtn) {
+
+    loginBtn.innerHTML =
+      `👤 ${user.email}`;
+
+    loginBtn.onclick = null;
+  }
+}
