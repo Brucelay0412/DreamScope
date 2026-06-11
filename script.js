@@ -471,78 +471,11 @@ window.addEventListener("click", function (event) {
 
 let currentUser = null;
 
-// 8. 註冊帳號
-async function signUpUser() {
-    const email = document.getElementById("authEmail")?.value.trim();
-    const password = document.getElementById("authPassword")?.value.trim();
 
-    if (!email || !password) {
-        alert("請輸入 Email 和密碼。");
-        return;
-    }
+let currentUser = null;
 
-    if (password.length < 6) {
-        alert("密碼至少需要 6 碼。");
-        return;
-    }
-
-    const { data, error } = await supabaseClient.auth.signUp({
-        email,
-        password
-    });
-
-    if (error) {
-        console.error("註冊失敗：", error);
-        alert("註冊失敗：" + error.message);
-        return;
-    }
-
-    alert("註冊成功！如果 Supabase 有開啟信箱驗證，請先到信箱收驗證信。");
-}
-
-// 9. 登入
-async function signInUser() {
-    const email = document.getElementById("authEmail")?.value.trim();
-    const password = document.getElementById("authPassword")?.value.trim();
-
-    if (!email || !password) {
-        alert("請輸入 Email 和密碼。");
-        return;
-    }
-
-    const { data, error } = await supabaseClient.auth.signInWithPassword({
-        email,
-        password
-    });
-
-    if (error) {
-        console.error("登入失敗：", error);
-        alert("登入失敗：" + error.message);
-        return;
-    }
-
-    currentUser = data.user;
-    updateAuthUI();
-    alert("登入成功！");
-}
-
-// 10. 登出
-async function signOutUser() {
-    const { error } = await supabaseClient.auth.signOut();
-
-    if (error) {
-        console.error("登出失敗：", error);
-        alert("登出失敗：" + error.message);
-        return;
-    }
-
-    currentUser = null;
-    updateAuthUI();
-    alert("已登出。");
-}
-
-// 11. 檢查目前登入狀態
-async function checkAuthUser() {
+// 檢查 Google 登入狀態
+async function checkGoogleUser() {
     const { data, error } = await supabaseClient.auth.getSession();
 
     if (error) {
@@ -550,84 +483,40 @@ async function checkAuthUser() {
         return;
     }
 
-    currentUser = data.session?.user || null;
-    updateAuthUI();
-}
+    const user = data.session?.user || null;
+    currentUser = user;
 
-// 12. 更新登入畫面
-function updateAuthUI() {
-    const authLoggedOut = document.getElementById("authLoggedOut");
-    const authLoggedIn = document.getElementById("authLoggedIn");
-    const authUserEmail = document.getElementById("authUserEmail");
+    const loginBtn = document.getElementById("googleLoginBtn");
 
-    if (!authLoggedOut || !authLoggedIn || !authUserEmail) return;
+    if (!loginBtn) return;
 
-    if (currentUser) {
-        authLoggedOut.style.display = "none";
-        authLoggedIn.style.display = "block";
-        authUserEmail.textContent = currentUser.email;
+    if (user) {
+        loginBtn.innerHTML = `👤 ${user.email}`;
+        loginBtn.onclick = null;
     } else {
-        authLoggedOut.style.display = "block";
-        authLoggedIn.style.display = "none";
-        authUserEmail.textContent = "";
+        loginBtn.innerHTML = "使用 Google 登入";
+        loginBtn.onclick = signInWithGoogle;
     }
 }
 
-window.onload = async () => {
-
-  loadDreamWall();
-
-  loadHomeStats();
-
-  await checkGoogleUser();
-
-};
-
 // Google 登入
-
 async function signInWithGoogle() {
-
-  const { error } =
-    await supabaseClient.auth.signInWithOAuth({
-
-      provider: "google",
-
-      options: {
-        redirectTo:
-          "https://brucelay0412.github.io/DreamScope"
-      }
-
+    const { error } = await supabaseClient.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+            redirectTo: "https://brucelay0412.github.io/DreamScope/"
+        }
     });
 
-  if (error) {
-    console.error(error);
-    alert("Google 登入失敗");
-  }
+    if (error) {
+        console.error("Google 登入失敗：", error);
+        alert("Google 登入失敗");
+    }
 }
 
-async function checkGoogleUser() {
-
-  const { data, error } =
-    await supabaseClient.auth.getSession();
-
-  if (error) {
-    console.error(error);
-    return;
-  }
-
-  const user =
-    data.session?.user;
-
-  if (!user) return;
-
-  const loginBtn =
-    document.getElementById("googleLoginBtn");
-
-  if (loginBtn) {
-
-    loginBtn.innerHTML =
-      `👤 ${user.email}`;
-
-    loginBtn.onclick = null;
-  }
-}
+// 頁面載入時執行
+window.onload = async () => {
+    await checkGoogleUser();
+    loadDreamWall();
+    loadHomeStats();
+};
