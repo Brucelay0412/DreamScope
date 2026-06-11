@@ -1,119 +1,143 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DreamScope  夢想規劃器</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DreamScope 夢想規劃器</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-  <div class="bg-orb orb-1"></div>
-  <div class="bg-orb orb-2"></div>
-  <div class="bg-orb orb-3"></div>
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
 
-  <header class="hero">
-  <div class="hero-badge">Dream Planner</div>
-  <h1>DreamScope</h1>
-  <p>
-    不是每個夢想都能立刻實現，<br>
-    但每個夢想都值得被好好規劃。
-  </p>
+    <header class="hero">
+        <div class="hero-badge">Dream Planner</div>
+        <h1>DreamScope</h1>
+        <p>
+            不是每個夢想都能立刻實現，<br>
+            但每個夢想都值得被好好規劃。
+        </p>
 
-  <div class="hero-stats">
-    <div class="stat-item">
-      <span id="totalDreams">0</span>
-      <p>正在追逐的夢想</p>
-    </div>
+        <div class="hero-stats">
+            <div class="stat-item">
+                <span id="totalDreams">0</span>
+                <p>正在追逐的夢想</p>
+            </div>
 
-    <div class="stat-item">
-      <span id="completedDreams">0</span>
-      <p>已達成的夢想</p>
-    </div>
+            <div class="stat-item">
+                <span id="completedDreams">0</span>
+                <p>已達成的夢想</p>
+            </div>
 
-    <div class="stat-item">
-      <span id="totalTargetMoney">0</span>
-      <p>本網站夢想總金額</p>
-    </div>
+            <div class="stat-item">
+                <span id="totalTargetMoney">0</span>
+                <p>本網站夢想總金額</p>
+            </div>
 
-    <div class="stat-item">
-      <span id="totalSavedMoney">0</span>
-      <p>追夢者累計已存下</p>
-    </div>
+            <div class="stat-item">
+                <span id="totalSavedMoney">0</span>
+                <p>追夢者累計已存下</p>
+            </div>
 
-  </div>
-
-  <div class="nav-actions">
-    <a href="wall.html" class="link-btn">前往夢想宇宙牆</a>
-  </div>
-</header>
-
-  <main class="home-layout">
-    <section class="card form-card">
-      <h2>AI 夢想規劃器</h2>
-
-      <label>夢想名稱</label>
-      <input type="text" id="dreamName" placeholder="例如：買 iPhone 18 Pro Max 2TB">
-
-      <label>目前存款</label>
-      <input type="number" id="currentMoney" placeholder="例如：100000">
-
-      <label>每月收入</label>
-      <input type="number" id="income" placeholder="例如：40000">
-
-      <label>每月支出</label>
-      <input type="number" id="expense" placeholder="例如：20000">
-
-      <label>夢想目標金額</label>
-      <input type="number" id="targetMoney" placeholder="例如：450000">
-
-      <button onclick="calculateDream()">開始規劃</button>
-    </section>
-
-    <section class="card result-card" id="resultBox">
-      <h2>AI 夢想導航結果</h2>
-
-      <div id="resultText" class="result-placeholder">
-        請先輸入你的夢想資料。<br>
-        AI 會幫你分析達成時間、每月存款目標，並產生專屬的圓夢計畫。
-      </div>
-
-      <div class="result-actions">
-        <button id="copyBtn" onclick="copyPlan()" style="display:none;">複製 AI 規劃</button>
-        <button id="shareBtn" onclick="sharePlanToWall()" style="display:none;">發布到夢想牆</button>
-      </div>
-    </section>
-
-    <section class="card about-card">
-      <h2>DreamScope 能幫你什麼？</h2>
-
-      <div class="feature-grid">
-        <div class="feature-item">
-          <div class="feature-icon">🧠</div>
-          <h3>AI 夢想分析</h3>
-          <p>根據你的收入、支出、存款與目標金額，產生專屬規劃。</p>
         </div>
 
-        <div class="feature-item">
-          <div class="feature-icon">📈</div>
-          <h3>進度追蹤</h3>
-          <p>把夢想放到宇宙牆，之後可以持續更新目前存款。</p>
+        <div class="nav-actions">
+            <a href="wall.html" class="link-btn">前往夢想宇宙牆</a>
         </div>
 
-        <div class="feature-item">
-          <div class="feature-icon">🌌</div>
-          <h3>夢想宇宙牆</h3>
-          <p>看看其他人的夢想，也讓自己的目標被記錄下來。</p>
+        <div class="auth-box">
+            <div id="authLoggedOut">
+                <input type="email" id="authEmail" placeholder="輸入 Email / Gmail">
+                <input type="password" id="authPassword" placeholder="輸入密碼，至少 6 碼">
+
+                <div class="auth-actions">
+                    <button onclick="signUpUser()">註冊帳號</button>
+                    <button onclick="signInUser()">登入</button>
+                </div>
+
+                <p class="auth-hint">登入後，你的夢想會綁定到你的帳號。</p>
+            </div>
+
+            <div id="authLoggedIn" style="display:none;">
+                <p class="auth-user-text">
+                    已登入：<span id="authUserEmail"></span>
+                </p>
+                <button onclick="signOutUser()">登出</button>
+            </div>
         </div>
-      </div>
-    </section>
-  </main>
 
-  <footer>
-    <p>© 2026 DreamScope AI 夢想規劃器</p>
-  </footer>
+    </header>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="script.js"></script>
+    <main class="home-layout">
+        <section class="card form-card">
+            <h2>AI 夢想規劃器</h2>
+
+            <label>夢想名稱</label>
+            <input type="text" id="dreamName" placeholder="例如：買 iPhone 18 Pro Max 2TB">
+
+            <label>目前存款</label>
+            <input type="number" id="currentMoney" placeholder="例如：100000">
+
+            <label>每月收入</label>
+            <input type="number" id="income" placeholder="例如：40000">
+
+            <label>每月支出</label>
+            <input type="number" id="expense" placeholder="例如：20000">
+
+            <label>夢想目標金額</label>
+            <input type="number" id="targetMoney" placeholder="例如：450000">
+
+            <button onclick="calculateDream()">開始規劃</button>
+        </section>
+
+        <section class="card result-card" id="resultBox">
+            <h2>AI 夢想導航結果</h2>
+
+            <div id="resultText" class="result-placeholder">
+                請先輸入你的夢想資料。<br>
+                AI 會幫你分析達成時間、每月存款目標，並產生專屬的圓夢計畫。
+            </div>
+
+            <div class="result-actions">
+                <button id="copyBtn" onclick="copyPlan()" style="display:none;">複製 AI 規劃</button>
+                <button id="shareBtn" onclick="sharePlanToWall()" style="display:none;">發布到夢想牆</button>
+            </div>
+        </section>
+
+        <section class="card about-card">
+            <h2>DreamScope 能幫你什麼？</h2>
+
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🧠</div>
+                    <h3>AI 夢想分析</h3>
+                    <p>根據你的收入、支出、存款與目標金額，產生專屬規劃。</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">📈</div>
+                    <h3>進度追蹤</h3>
+                    <p>把夢想放到宇宙牆，之後可以持續更新目前存款。</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">🌌</div>
+                    <h3>夢想宇宙牆</h3>
+                    <p>看看其他人的夢想，也讓自己的目標被記錄下來。</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 DreamScope AI 夢想規劃器</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>

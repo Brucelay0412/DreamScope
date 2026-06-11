@@ -165,7 +165,9 @@ async function calculateDream() {
                 dream_name: dreamName,
                 current_status: `目前存款：${currentMoney}，每月收支：+${monthlySave}`,
                 target_goal: `目標金額：${targetMoney}`,
-                ai_plan: aiPlan
+                ai_plan: aiPlan,
+                user_id: currentUser ? currentUser.id : null,
+                user_email: currentUser ? currentUser.email : null
             }
         ]);
 
@@ -214,7 +216,9 @@ async function addDreamToWall() {
             dream_name: dreamName,
             target_money: targetMoney,
             current_money: currentMoney,
-            message: message || "慢慢來，但不要停。"
+            message: message || "慢慢來，但不要停。",
+            user_id: currentUser ? currentUser.id : null,
+            user_email: currentUser ? currentUser.email : null
         }
     ]);
 
@@ -363,9 +367,12 @@ async function sharePlanToWall() {
             target_money: latestDreamData.targetMoney,
             current_money: latestDreamData.currentMoney,
             message: latestDreamData.message,
-            ai_plan: latestAiPlanText
+            ai_plan: latestAiPlanText,
+            user_id: currentUser ? currentUser.id : null,
+            user_email: currentUser ? currentUser.email : null
         }
     ]);
+
 
     if (error) {
         console.error(error);
@@ -462,7 +469,112 @@ window.addEventListener("click", function (event) {
     }
 });
 
-window.onload = () => {
+let currentUser = null;
+
+// 8. 註冊帳號
+async function signUpUser() {
+    const email = document.getElementById("authEmail")?.value.trim();
+    const password = document.getElementById("authPassword")?.value.trim();
+
+    if (!email || !password) {
+        alert("請輸入 Email 和密碼。");
+        return;
+    }
+
+    if (password.length < 6) {
+        alert("密碼至少需要 6 碼。");
+        return;
+    }
+
+    const { data, error } = await supabaseClient.auth.signUp({
+        email,
+        password
+    });
+
+    if (error) {
+        console.error("註冊失敗：", error);
+        alert("註冊失敗：" + error.message);
+        return;
+    }
+
+    alert("註冊成功！如果 Supabase 有開啟信箱驗證，請先到信箱收驗證信。");
+}
+
+// 9. 登入
+async function signInUser() {
+    const email = document.getElementById("authEmail")?.value.trim();
+    const password = document.getElementById("authPassword")?.value.trim();
+
+    if (!email || !password) {
+        alert("請輸入 Email 和密碼。");
+        return;
+    }
+
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email,
+        password
+    });
+
+    if (error) {
+        console.error("登入失敗：", error);
+        alert("登入失敗：" + error.message);
+        return;
+    }
+
+    currentUser = data.user;
+    updateAuthUI();
+    alert("登入成功！");
+}
+
+// 10. 登出
+async function signOutUser() {
+    const { error } = await supabaseClient.auth.signOut();
+
+    if (error) {
+        console.error("登出失敗：", error);
+        alert("登出失敗：" + error.message);
+        return;
+    }
+
+    currentUser = null;
+    updateAuthUI();
+    alert("已登出。");
+}
+
+// 11. 檢查目前登入狀態
+async function checkAuthUser() {
+    const { data, error } = await supabaseClient.auth.getSession();
+
+    if (error) {
+        console.error("取得登入狀態失敗：", error);
+        return;
+    }
+
+    currentUser = data.session?.user || null;
+    updateAuthUI();
+}
+
+// 12. 更新登入畫面
+function updateAuthUI() {
+    const authLoggedOut = document.getElementById("authLoggedOut");
+    const authLoggedIn = document.getElementById("authLoggedIn");
+    const authUserEmail = document.getElementById("authUserEmail");
+
+    if (!authLoggedOut || !authLoggedIn || !authUserEmail) return;
+
+    if (currentUser) {
+        authLoggedOut.style.display = "none";
+        authLoggedIn.style.display = "block";
+        authUserEmail.textContent = currentUser.email;
+    } else {
+        authLoggedOut.style.display = "block";
+        authLoggedIn.style.display = "none";
+        authUserEmail.textContent = "";
+    }
+}
+
+window.onload = async () => {
+    await checkAuthUser();
     loadDreamWall();
     loadHomeStats();
 };
