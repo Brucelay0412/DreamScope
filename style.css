@@ -762,6 +762,12 @@ footer {
     margin: 8px 0;
 }
 
+.author-divider {
+  border: 0;
+  border-top: 1px dashed rgba(255, 255, 255, 0.18);
+  margin: 14px 0;
+}
+
 /* 強化關鍵字顏色 */
 .author-info-card strong {
     color: #ffffff;
