@@ -32,29 +32,32 @@
     <section class="card">
       <h2>建立我的夢想追蹤卡</h2>
 
-      <form id="wallForm" onsubmit="return false;">
-      <div class="wall-form-grid">
-        <div>
-          <label for="nickname">暱稱</label>
-          <input type="text" id="nickname" name="nickname" placeholder="例如：大帥哥" autocomplete="off">
+      <form id="wallForm" onsubmit="return false;" autocomplete="off">
+        <div class="wall-form-grid">
+          <div>
+            <label for="nickname">暱稱</label>
+            <input type="text" id="nickname" name="nickname" placeholder="例如：大帥哥" autocomplete="new-password">
 
-          <label for="wallDreamName">夢想名稱</label>
-          <input type="text" id="wallDreamName" name="wallDreamName" placeholder="例如：入手 YZF-R6" autocomplete="off">
+            <label for="wallDreamName">夢想名稱</label>
+            <input type="text" id="wallDreamName" name="wallDreamName" placeholder="例如：入手 YZF-R6"
+              autocomplete="new-password">
+          </div>
+
+          <div>
+            <label for="wallTargetMoney">目標金額</label>
+            <input type="number" id="wallTargetMoney" name="wallTargetMoney" placeholder="例如：450000"
+              autocomplete="new-password">
+
+            <label for="wallCurrentMoney">目前存款</label>
+            <input type="number" id="wallCurrentMoney" name="wallCurrentMoney" placeholder="例如：100000"
+              autocomplete="new-password">
+          </div>
         </div>
 
-        <div>
-          <label for="wallTargetMoney">目標金額</label>
-          <input type="number" id="wallTargetMoney" name="wallTargetMoney" placeholder="例如：450000" autocomplete="off">
+        <label for="message">給未來自己的話</label>
+        <input type="text" id="message" name="message" placeholder="例如：慢慢來，但不要停。" autocomplete="new-password">
 
-          <label for="wallCurrentMoney">目前存款</label>
-          <input type="number" id="wallCurrentMoney" name="wallCurrentMoney" placeholder="例如：100000" autocomplete="off">
-        </div>
-      </div>
-
-      <label for="message">給未來自己的話</label>
-      <input type="text" id="message" name="message" placeholder="例如：慢慢來，但不要停。" autocomplete="off">
-
-      <button type="button" onclick="addDreamToWall()">建立夢想卡</button>
+        <button type="button" onclick="addDreamToWall()">建立夢想卡</button>
       </form>
     </section>
 
