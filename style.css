@@ -105,11 +105,7 @@ body::before {
   }
 }
 
-/* Hero */
-.hero {
-  text-align: center;
-  padding: 58px 20px 30px;
-}
+
 
 .hero-badge {
   display: inline-block;
@@ -707,4 +703,89 @@ footer {
     font-size: 12px;
     font-weight: 800;
     letter-spacing: 1px;
+}
+
+
+/* ==========================================================================
+   新增：左上角個人簡歷與課程內容（相容原有的毛玻璃與漸層風格）
+   ========================================================================== */
+
+/* 1. 重新定義 hero 容器，提供絕對定位的基準點並增加留白 */
+.hero {
+    position: relative;
+    text-align: center;
+    padding: 100px 20px 30px; /* 增加頂部 padding，避免大螢幕下小卡與下方標題太擠 */
+}
+
+/* 2. 小卡主體：完美融合你原有的 --card 變數與毛玻璃特效 */
+.author-info-card {
+    position: absolute;
+    top: 30px;
+    left: 4%;
+    max-width: 320px;
+    padding: 24px;
+    background: var(--card); /* 延用你原有的暗色透明底色 */
+    border: 1px solid var(--border);
+    border-radius: 22px; /* 呼叫你整站的圓角語彙 */
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    text-align: left;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+    transition: 0.35s ease;
+}
+
+/* 滑鼠滑入時的小卡微光動態 */
+.author-info-card:hover {
+    border-color: rgba(168, 85, 247, 0.4); /* 微弱的紫色外框光暈 */
+    box-shadow: 
+        0 25px 60px rgba(0, 0, 0, 0.5),
+        0 0 25px rgba(168, 85, 247, 0.15);
+    transform: translateY(-2px);
+}
+
+/* 小卡標題：搭配你整站的粉紫漸層系調 */
+.author-info-card h3 {
+    font-size: 1.1rem;
+    color: #f0abfc; /* 使用你 hero-badge 的粉紫色 */
+    margin: 0 0 14px 0;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+    letter-spacing: 1px;
+}
+
+/* 小卡內文描述 */
+.author-info-card p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--soft); /* 延用你原本的軟灰色 */
+    margin: 8px 0;
+}
+
+/* 強化關鍵字顏色 */
+.author-info-card strong {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+/* ==========================================================================
+   RWD 響應式修正：當螢幕寬度小於 1100px 時自動轉為置中排列，避免遮擋 DreamScope 標題
+   ========================================================================== */
+@media (max-width: 1100px) {
+    .hero {
+        padding-top: 40px; /* 恢復正常上方留白 */
+    }
+    
+    .author-info-card {
+        position: relative; /* 取消絕對定位，回到傳統文件流 */
+        top: 0;
+        left: 0;
+        max-width: min(92%, 600px); /* 在平板/手機上加寬，比較好閱讀 */
+        margin: 0 auto 30px auto; /* 區塊置中，並與下方的 Dream Planner 徽章保持距離 */
+        text-align: center; /* 文字轉為置中 */
+    }
+    
+    .author-info-card h3 {
+        text-align: center;
+    }
 }

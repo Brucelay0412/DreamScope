@@ -2,11 +2,64 @@
 <html lang="zh-Hant">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DreamScope 夢想規劃器</title>
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DreamScope AI 夢想規劃器</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
+<body>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-orb orb-3"></div>
+
+  <header class="hero">
+    <div class="author-info-card">
+      <h3>開發者檔案</h3>
+      <p><strong>作者：</strong>Yongjun_Lei 4B2G0023 </p>
+      <p><strong>本學期課程：</strong>本學期深入學習了網頁前端架構、資料庫動態系統整合（PHP/MySQL）以及行動應用程式開發（Java/Kotlin）。</p>
+      <p><strong>期末專題：</strong>結合本期所學，打造「DreamScope 夢想規劃器」AI 導航系統，將前端美學與實用財務規劃結合，實現追夢進度視覺化管理。</p>
+    </div>
+
+    <div class="hero-badge">Dream Planner</div>
+    <h1>DreamScope</h1>
+    <p>
+      不是每個夢想都能立刻實現，<br>
+      但每個夢想都值得被好好規劃。
+    </p>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span id="totalDreams">0</span>
+        <p>正在追逐的夢想</p>
+      </div>
+
+      <div class="stat-item">
+        <span id="completedDreams">0</span>
+        <p>已達成的夢想</p>
+      </div>
+
+      <div class="stat-item">
+        <span id="totalTargetMoney">0</span>
+        <p>本網站夢想總金額</p>
+      </div>
+
+      <div class="stat-item">
+        <span id="totalSavedMoney">0</span>
+        <p>追夢者累計已存下</p>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <button id="googleLoginBtn" class="link-btn" onclick="signInWithGoogle()" type="button">
+        使用 Google 登入
+      </button>
+
+      <a href="wall.html" class="link-btn">
+        前往夢想宇宙牆
+      </a>
+    </div>
+  </header>
 
 <body>
     <div class="bg-orb orb-1"></div>
