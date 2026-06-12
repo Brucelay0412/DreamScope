@@ -26,38 +26,36 @@
     </div>
   </header>
 
-  <input type="text" id="nickname" autocomplete="off">
-  <input type="text" id="wallDreamName" autocomplete="off">
-  <input type="number" id="wallTargetMoney" autocomplete="off">
-  <input type="number" id="wallCurrentMoney" autocomplete="off">
-  <input type="text" id="message" autocomplete="off">
+  <!-- 表單欄位已移到下方的 form，避免重複 id -->
 
   <main class="wall-layout">
     <section class="card">
       <h2>建立我的夢想追蹤卡</h2>
 
+      <form id="wallForm" onsubmit="return false;">
       <div class="wall-form-grid">
         <div>
-          <label>暱稱</label>
-          <input type="text" id="nickname" placeholder="例如：大帥哥">
+          <label for="nickname">暱稱</label>
+          <input type="text" id="nickname" name="nickname" placeholder="例如：大帥哥" autocomplete="off">
 
-          <label>夢想名稱</label>
-          <input type="text" id="wallDreamName" placeholder="例如：入手 YZF-R6">
+          <label for="wallDreamName">夢想名稱</label>
+          <input type="text" id="wallDreamName" name="wallDreamName" placeholder="例如：入手 YZF-R6" autocomplete="off">
         </div>
 
         <div>
-          <label>目標金額</label>
-          <input type="number" id="wallTargetMoney" placeholder="例如：450000">
+          <label for="wallTargetMoney">目標金額</label>
+          <input type="number" id="wallTargetMoney" name="wallTargetMoney" placeholder="例如：450000" autocomplete="off">
 
-          <label>目前存款</label>
-          <input type="number" id="wallCurrentMoney" placeholder="例如：100000">
+          <label for="wallCurrentMoney">目前存款</label>
+          <input type="number" id="wallCurrentMoney" name="wallCurrentMoney" placeholder="例如：100000" autocomplete="off">
         </div>
       </div>
 
-      <label>給未來自己的話</label>
-      <input type="text" id="message" placeholder="例如：慢慢來，但不要停。">
+      <label for="message">給未來自己的話</label>
+      <input type="text" id="message" name="message" placeholder="例如：慢慢來，但不要停。" autocomplete="off">
 
-      <button onclick="addDreamToWall()">建立夢想卡</button>
+      <button type="button" onclick="addDreamToWall()">建立夢想卡</button>
+      </form>
     </section>
 
     <section class="card dream-wall-card">
@@ -70,7 +68,7 @@
 
       <div id="planModal" class="plan-modal">
         <div class="plan-modal-content">
-          <button class="modal-close-btn" onclick="closePlanModal()">✕</button>
+          <button class="modal-close-btn" type="button" onclick="closePlanModal()">✕</button>
 
           <h2 id="modalTitle">AI 夢想導航紀錄</h2>
 
