@@ -46,7 +46,7 @@
 
         <div class="nav-actions">
 
-            <button id="googleLoginBtn" class="link-btn" onclick="signInWithGoogle()">
+            <button id="googleLoginBtn" class="link-btn" onclick="signInWithGoogle()" type="button">
 
                 使用 Google 登入
 
@@ -61,26 +61,31 @@
 
     </header>
 
+    <!-- 已將表單欄位移至下方的 form，避免重複 id -->
+
+
     <main class="home-layout">
         <section class="card form-card">
             <h2>AI 夢想規劃器</h2>
 
-            <label>夢想名稱</label>
-            <input type="text" id="dreamName" placeholder="例如：買 iPhone 18 Pro Max 2TB">
+            <form id="dreamForm" onsubmit="return false;">
+            <label for="dreamName">夢想名稱</label>
+            <input type="text" id="dreamName" name="dreamName" placeholder="例如：買 iPhone 18 Pro Max 2TB" autocomplete="off">
 
-            <label>目前存款</label>
-            <input type="number" id="currentMoney" placeholder="例如：100000">
+            <label for="currentMoney">目前存款</label>
+            <input type="number" id="currentMoney" name="currentMoney" placeholder="例如：100000" autocomplete="off">
 
-            <label>每月收入</label>
-            <input type="number" id="income" placeholder="例如：40000">
+            <label for="income">每月收入</label>
+            <input type="number" id="income" name="income" placeholder="例如：40000" autocomplete="off">
 
-            <label>每月支出</label>
-            <input type="number" id="expense" placeholder="例如：20000">
+            <label for="expense">每月支出</label>
+            <input type="number" id="expense" name="expense" placeholder="例如：20000" autocomplete="off">
 
-            <label>夢想目標金額</label>
-            <input type="number" id="targetMoney" placeholder="例如：450000">
+            <label for="targetMoney">夢想目標金額</label>
+            <input type="number" id="targetMoney" name="targetMoney" placeholder="例如：450000" autocomplete="off">
 
-            <button onclick="calculateDream()">開始規劃</button>
+            <button type="button" onclick="calculateDream()">開始規劃</button>
+            </form>
         </section>
 
         <section class="card result-card" id="resultBox">
@@ -92,8 +97,8 @@
             </div>
 
             <div class="result-actions">
-                <button id="copyBtn" onclick="copyPlan()" style="display:none;">複製 AI 規劃</button>
-                <button id="shareBtn" onclick="sharePlanToWall()" style="display:none;">發布到夢想牆</button>
+                <button id="copyBtn" type="button" onclick="copyPlan()" style="display:none;">複製 AI 規劃</button>
+                <button id="shareBtn" type="button" onclick="sharePlanToWall()" style="display:none;">發布到夢想牆</button>
             </div>
         </section>
 
